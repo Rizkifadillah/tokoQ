@@ -63,8 +63,8 @@ class ProductController extends Controller
                     return \format_uang($produk->stok);
                 })
                 ->addColumn('aksi', function($produk){
-                            $button = ' <button onclick="editForm(`'. route('product.update', $produk->id_produk).'`)" class="edit btn btn-sm btn-warning" >Edit</button> ';
-                            $button .= ' <button onclick="deleteForm(`'. route('product.destroy', $produk->id_produk).'`)" class="delete btn btn-sm btn-danger" >Delete</button>';
+                            $button = ' <button type="button" onclick="editForm(`'. route('product.update', $produk->id_produk).'`)" class="edit btn btn-sm btn-warning" >Edit</button> ';
+                            $button .= ' <button type="button" onclick="deleteForm(`'. route('product.destroy', $produk->id_produk).'`)" class="delete btn btn-sm btn-danger" >Delete</button>';
             
                             return $button;
                         })

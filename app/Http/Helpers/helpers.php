@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
+
 function format_uang($angka){
     return number_format($angka, 0, ',', '.');
 }
@@ -24,7 +26,7 @@ function terbilang($angka){
     }elseif($angka < 1000000){
         $terbilang = terbilang($angka / 1000) . ' ribu' . terbilang($angka % 1000);
     }elseif($angka < 1000000000){
-        $terbilang = terbilang($angka / 1000000) . 'juta' . terbilang($angka % 1000000);
+        $terbilang = terbilang($angka / 1000000) . ' juta ' . terbilang($angka % 1000000);
     }
 
     return $terbilang;
@@ -52,4 +54,28 @@ function tanggal_indonesia($tgl, $tampil_hari = true){
 
 function tambah_nol_depan($value, $threshold = null){
     return sprintf("%0". $threshold . "s", $value );
+}
+
+
+if ( !function_exists('set_active')) {
+    # code...
+    function set_active($uri,$output = 'active')
+    {
+        if (is_array($uri)) {
+            # code...
+            foreach ($uri as $u) {
+                if (Route::is($u)) {
+                    # code...
+                    return $output;
+                }
+            }
+        } else {
+            # code...
+            if (Route::is($uri)) {
+                # code...
+                return $output;
+            }
+        }
+        
+    }
 }

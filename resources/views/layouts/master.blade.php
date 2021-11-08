@@ -4,8 +4,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ config('app.name')}} | @yield('title')</title>
+  <title>{{ $setting->nama_toko }} | @yield('title')</title>
   <meta name="csrf-token" content="{{ csrf_token() }}">
+
+  <link rel="icon" href="{{ asset($setting->path_logo ?? 'assets/shopping.png') }}"" type="image/*">
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -37,6 +39,7 @@
   <!-- Main Sidebar Container -->
   @include('layouts.sidebar')
 
+  {{-- @dd($setting) --}}
 
   <!-- Content Wrapper. Contains page content -->
   {{-- @yield('content') --}}
@@ -77,7 +80,7 @@
   <!-- /.control-sidebar -->
 
   <!-- Main Footer -->
-  @include('layouts.footer')
+  {{-- @include('layouts.footer') --}}
 </div>
 <!-- ./wrapper -->
 
@@ -124,6 +127,13 @@
   {{-- @include('sweetalert::alert') --}}
 
   {{-- javascript:external --}}
+
+  <script>
+    function preview(selector, temporaryFile, width = 200){
+      $(selector).empty();
+      $(selector).append(`<img src="${window.URL.createObjectURL(temporaryFile)}" width="${width}">`);;
+    }
+  </script>
   @stack('script')
   @stack('javascript-internal')
 

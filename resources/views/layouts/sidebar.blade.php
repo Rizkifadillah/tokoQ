@@ -1,11 +1,20 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="index3.html" class="brand-link">
-        <img src="{{ asset('assets/shopping.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
+        <img src="{{ asset($setting->path_logo ?? 'assets/shopping.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
             style="opacity: .8">
         {{-- <img src="{{ asset('assets/shopping.png')}}" alt="User Avatar" class="img-size-50 mr-3 img-circle"> --}}
 
-        <span class="brand-text font-weight-light"><b> T<b>Q</b>K<b>Q</b> </b></span>
+        @php
+          $words = explode(' ', $setting->nama_toko);
+          $word = "";
+          foreach ($words as $w) {
+            # code...
+            $word .= $w[0];
+          }
+          // dd($word);
+        @endphp
+        <span class="brand-text font-weight-light nama-toko"><b> {{$setting->nama_toko}} </b></span>
     </a>
 
     <!-- Sidebar -->
@@ -13,21 +22,20 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
-                <img src="{{ asset(Auth::user()->foto ?? 'assets/dist/img/user2-160x160.jpg') }}"
-                    class="img-circle elevation-2" alt="User Image" style="height: 30px;  width:30px;">
+                <img src="{{ asset( auth()->user()->foto ?? 'assets/dist/img/user2-160x160.jpg') }}"
+                    class="img-circle img-foto-profil elevation-2" alt="User Image" style="height: 30px;  width:30px;">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{ Auth::user()->name ?? '-' }}</a>
+                <a href="{{ route('user.profil')}}" class="d-block">{{ auth()->user()->name ?? '-' }}</a>
             </div>
-            <form method="POST" action="{{ route('logout') }}">
+            {{-- <form method="POST" action="{{ route('logout') }}">
                 @csrf
 
-                <x-jet-dropdown-link href="{{ route('logout') }}"
-                        onclick="event.preventDefault();
+                <x-jet-dropdown-link href="{{ route('logout') }}" onclick="event.preventDefault();
                                 this.closest('form').submit();">
                     {{ __('Log Out') }}
                 </x-jet-dropdown-link>
-            </form>
+            </form> --}}
             {{-- <div class="out">
               <a href="#" onclick="$('#logout-form').submit()">
                 Keluar
@@ -64,25 +72,25 @@
                 <ul class="nav nav-treeview" style="display: none;">
                   <li class="nav-item">
                     <a href="pages/forms/general.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                      <i class="fas fa-circle nav-icon"></i>
                       <p>General Elements</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="pages/forms/advanced.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                      <i class="fas fa-circle nav-icon"></i>
                       <p>Advanced Elements</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="pages/forms/editors.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                      <i class="fas fa-circle nav-icon"></i>
                       <p>Editors</p>
                     </a>
                   </li>
                   <li class="nav-item">
                     <a href="pages/forms/validation.html" class="nav-link">
-                      <i class="far fa-circle nav-icon"></i>
+                      <i class="fas fa-circle nav-icon"></i>
                       <p>Validation</p>
                     </a>
                   </li>
@@ -100,152 +108,128 @@
                 {{-- <ul class="nav nav-treeview"> --}}
                 {{-- <li class="nav-item">
                 <a href="{{ route('dashboard.index')}}" class="nav-link {{ set_active(['dashboard.index','dashboard.create','dashboard.edit','dashboard.show']) }}">
-                  <i class="far fa-circle nav-icon"></i>
+                  <i class="fas fa-circle nav-icon"></i>
                   <p>Dashboard</p>
                 </a>
               </li> --}}
+              @if (auth()->user()->lavel == 1)
+                  
                 <li class="nav-item">
-                    <a href="{{ route('dashboard')}}" class="nav-link ">
-                        <i class="far fa-circle nav-icon"></i>
+                    <a href="{{ route('dashboard') }}" class="nav-link {{ set_active(['dashboard']) }} ">
+                        <i class="fas fa-chart-pie text-default"></i>
                         <p>Beranda</p>
                     </a>
                 </li>
 
                 <li class="nav-header">MASTER DATA</li>
                 <li class="nav-item">
-                    <a href="{{ route('kategori.index')}}" class="nav-link ">
-                        <i class="far fa-circle nav-icon"></i>
+                    <a href="{{ route('kategori.index') }}" class="nav-link {{ set_active(['kategori.index']) }} ">
+                        <i class="fas fa-th nav-icon text-warning"></i>
                         <p>Kategori</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link ">
-                        <i class="far fa-circle nav-icon"></i>
+                    <a href="{{ route('supplier.index') }}" class="nav-link {{ set_active(['supplier.index']) }} ">
+                        <i class="fas fa-truck nav-icon text-success"></i>
                         <p>Supplier</p>
                     </a>
                 </li>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('product.index')}}" class="nav-link ">
-                        <i class="far fa-circle nav-icon"></i>
+                    <a href="{{ route('product.index') }}" class="nav-link {{ set_active(['product.index']) }} ">
+                        <i class="fas fa-barcode nav-icon text-teal"></i>
                         <p>Produk</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="{{ route('member.index')}}" class="nav-link ">
-                        <i class="far fa-circle nav-icon"></i>
+                    <a href="{{ route('member.index') }}" class="nav-link {{ set_active(['member.index']) }} ">
+                        <i class="fas fa-users nav-icon text-maroon"></i>
                         <p>Member</p>
                     </a>
 
                 </li>
                 <li class="nav-header">TRANSAKSI</li>
                 <li class="nav-item">
-                    <a href="" class="nav-link ">
-                        <i class="far fa-circle nav-icon"></i>
+                    <a href="{{ route('pengeluaran.index') }}" class="nav-link {{ set_active(['pengeluaran.index']) }} ">
+                        <i class="fas fa-upload nav-icon text-danger"></i>
                         <p>Pengeluaran</p>
                     </a>
                 </li>
                 <li class="nav-item">
-                  <a href="" class="nav-link ">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Pembelian</p>
-                  </a>
-              </li>
-              <li class="nav-item">
-                <a href="" class="nav-link ">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Penjualan</p>
-                </a>
-            </li>
-            <li class="nav-item">
-              <a href="" class="nav-link ">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Transaksi Lama</p>
-              </a>
-          </li>
-          <li class="nav-item">
-            <a href="" class="nav-link ">
-                <i class="far fa-circle nav-icon"></i>
-                <p>Transaksi Baru</p>
-            </a>
-        </li>
+                    <a href="{{ route('pembelian.index') }}" class="nav-link {{ set_active(['pembelian.index']) }} ">
+                        <i class="fas fa-inbox text-orange nav-icon"></i>
+                        <p>Pembelian</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('penjualan.index')}}" class="nav-link {{ set_active(['penjualan.index']) }} ">
+                        <i class="fas fa-store text-fuchsia nav-icon"></i>
+                        <p>Penjualan</p>
+                    </a>
+                </li>
 
-
-                {{-- <li class="nav-item">
-                <a href="{{ route('staff.index')}}" class="nav-link {{ set_active(['staff.index','staff.create','staff.edit','staff.show']) }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Data Staff</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('mapel.index')}}" class="nav-link {{ set_active(['mapel.index','mapel.create','mapel.edit','mapel.show']) }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Data Mapel</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('guru.index')}}" class="nav-link {{ set_active(['guru.index','guru.create','guru.edit','guru.show']) }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Data Guru</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('kelas.index')}}" class="nav-link {{ set_active(['kelas.index','kelas.create','kelas.edit','kelas.show']) }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Data Kelas</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="{{ route('siswa.index')}}" class="nav-link {{ set_active(['siswa.index','siswa.create','siswa.edit','siswa.show']) }}">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Data Siswa</p>
-                </a>
-              </li> --}}
-
-                {{-- <li class="nav-item">
-                <a href="pages/layout/fixed-sidebar-custom.html" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Data Nilai</p>
-                </a>
-              </li>
-
-            <ul>
-              <li class="nav-header">NILAI</li>
-              
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Input Nilai Siswa</p>
-                </a>
-              </li>
-            </ul> --}}
-
-                {{-- </ul> --}}
-                {{-- </li> --}}
-
+                <li class="nav-item">
+                    <a href="{{ route('transaksi.baru')}}" class="nav-link {{ set_active(['transaksi.baru']) }} ">
+                        <i class="fas fa-cart-arrow-down text-info nav-icon"></i>
+                        <p>Transaksi Baru</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('transaksi.index')}}" class="nav-link {{ set_active(['transaksi.index']) }} ">
+                        <i class="fas fa-cart-arrow-down text-lime nav-icon"></i>
+                        <p>Transaksi Lama</p>
+                    </a>
+                </li>
                 <li class="nav-header">REPORT</li>
                 <li class="nav-item">
-                  <a href="" class="nav-link ">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Laporan</p>
-                  </a>
-              </li>
-                {{-- <li class="nav-item">
-            <a class="nav-link" href="{{ route('logout') }}"
-                onclick="event.preventDefault();
-                              document.getElementById('logout-form').submit();">
-                {{ __('Logout') }}
-            </a>
+                    <a href="{{ route('laporan.index')}}" class="nav-link {{ set_active(['laporan.index']) }} ">
+                        <i class="fas fa-book nav-icon text-lightblue"></i>
+                        <p>Laporan</p>
+                    </a>
+                </li>
+                <li class="nav-header">SYSTEM</li>
+                <li class="nav-item">
+                    <a href="{{ route('user.index')}}" class="nav-link {{ set_active(['user.index']) }}">
+                        <i class="fas fa-user-plus nav-icon text-olive"></i>
+                        <p>User</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('setting.index')}}" class="nav-link {{ set_active(['setting.index','setting.create','setting.show','setting.edit']) }}">
+                        <i class="fas fa-cogs nav-icon text-grey"></i>
+                        <p>Setting</p>
+                    </a>
+                </li>
+              @else
+                <li class="nav-header">DASHBOARD</li>
 
-            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                @csrf
-            </form>
-          </li> --}}
+                <li class="nav-item">
+                    <a href="{{ route('dashboard') }}" class="nav-link {{ set_active(['dashboard']) }}  ">
+                        <i class="fas fa-chart-pie text-primary nav-icon"></i>
+                        <p>Beranda</p>
+                    </a>
+                </li>
+                <li class="nav-header">TRANSAKSI</li>
+                <li class="nav-item">
+                    <a href="{{ route('transaksi.baru')}}" class="nav-link {{ set_active(['transaksi.baru', 'transaksi.selesai']) }}  ">
+                        <i class="fas fa-cart-arrow-down text-info nav-icon"></i>
+                        <p>Transaksi Baru</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('transaksi.index')}}" class="nav-link {{ set_active(['transaksi.index']) }}  ">
+                        <i class="fas fa-cart-arrow-down text-lime nav-icon"></i>
+                        <p>Transaksi Lama</p>
+                    </a>
+                </li>
+              @endif
+
+
             </ul>
         </nav>
         <!-- /.sidebar-menu -->
-      </div>
-      
-   
+    </div>
+
+
     <!-- /.sidebar -->
 </aside>

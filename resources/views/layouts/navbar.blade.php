@@ -126,7 +126,7 @@
               <a class="nav-link btn btn-sm btn-block btn-outline-info" href="{{ route('logout') }}"
               onclick="event.preventDefault();
                               this.closest('form').submit();">
-              <i class="fas fa-sync-alt" ></i> 
+              <i class="fas fa-share text-info" ></i> 
                   {{ __('Log Out') }}
               </a>
           </form>

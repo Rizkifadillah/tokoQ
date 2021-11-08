@@ -93,7 +93,7 @@ class KategoriController extends Controller
     public function update(Request $request, $id)
     {
         $kategori = Kategori::find($id);
-        $kategori->nama = $request->nama;
+        $kategori->nama_kategori = $request->nama_kategori;
         $kategori->update();
 
         return response()->json('Data berhasil diedit', 200);

@@ -112,11 +112,11 @@
         $('#modal-form form').attr('action', url);
         $('#modal-form [name=_method]').val('put');
         //triger
-        $('#modal-form [name=nama]').focus();
+        $('#modal-form [name=nama_kategori]').focus();
 
         $.get(url)
           .done((response) => {
-            $('#modal-form [name=nama]').val(response.nama);
+            $('#modal-form [name=nama_kategori]').val(response.nama_kategori);
           })
           .fail((errors) => {
               alert('Tidak dapat mengedit data');

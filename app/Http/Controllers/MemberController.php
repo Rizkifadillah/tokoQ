@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use App\Models\Setting;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
@@ -26,13 +28,18 @@ class MemberController extends Controller
                 ->addColumn('kode', function ($member){
                     return '<span class="badge badge-warning">'.$member->kode_member.'</span>';
                 })
+                ->addColumn('select_all', function ($member){
+                    return '
+                                <input type="checkbox" name="id_member[]" value="'. $member->id_member .'">
+                            ';
+                })
                 ->addColumn('aksi', function($member){
-                            $button = ' <button onclick="editForm(`'. route('member.update', $member->id_member).'`)" class="edit btn btn-sm btn-warning" >Edit</button> ';
-                            $button .= ' <button onclick="deleteForm(`'. route('member.destroy', $member->id_member).'`)" class="delete btn btn-sm btn-danger" >Delete</button>';
+                            $button = ' <button type="button" onclick="editForm(`'. route('member.update', $member->id_member).'`)" class="edit btn btn-sm btn-warning" >Edit</button> ';
+                            $button .= ' <button type="button" onclick="deleteForm(`'. route('member.destroy', $member->id_member).'`)" class="delete btn btn-sm btn-danger" >Delete</button>';
             
                             return $button;
                         })
-                        ->rawColumns(['aksi','kode'])
+                        ->rawColumns(['aksi','kode','select_all'])
                 ->make(true);
     }
 
@@ -128,5 +135,23 @@ class MemberController extends Controller
         $member->delete();
 
         return response('Data berhasil dihapus',200);
+    }
+
+    public function cetakMember(Request $request){
+        $datamember = \collect(array());
+
+        foreach($request->id_member as $id){
+            $member = Member::find($id);
+            $datamember[] = $member;
+        }
+        // return $datamember->chunk(2);
+
+        // $datamember = $datamember->chunk(2);
+        $setting =Setting::first();
+        $no = 1;
+
+        $pdf = PDF::loadView('menu.member.cetak', compact('datamember','no','setting'));
+        $pdf->setPaper(array(0,0, 566.93, 850.39), 'potrait');
+        return $pdf->stream('member.pdf');
     }
 }

@@ -3,7 +3,8 @@
         <x-slot name="logo">
             <div class="logo" style="width: 100px;">
                 <a href="{{ url('/')}}">
-                    <img src="{{ asset('assets/shopping.png')}}" alt="">
+                    {{-- @dd($setting->path_logo) --}}
+                    <img src="{{ asset($setting->path_logo ?? 'assets/shopping.png') }}" alt="">
                     {{-- <h1 class="p-6"><b>TokoQ</b></h1> --}}
                 </a>
 

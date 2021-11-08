@@ -16,7 +16,7 @@ class CreatePembelianDetailTable extends Migration
         Schema::create('pembelian_detail', function (Blueprint $table) {
             $table->id('id_pembelian_detail');
             $table->bigInteger('id_pembelian');
-            $table->bigInteger('id_product');
+            $table->bigInteger('id_produk');
             $table->integer('harga_beli');
             $table->integer('jumlah');
             $table->integer('subtotal');

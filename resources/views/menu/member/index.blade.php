@@ -22,23 +22,24 @@
                     <button  onclick="deleteSelected('{{ route('member.delete_selected')}}')" class="btn btn-sm btn-danger" ><i class="fa fa-trash"></i>
                         Hapus
                     </button>
-                    <button  onclick="cetakBarcode('{{ route('member.cetak_barcode')}}')" class="btn btn-sm btn-warning" ><i class="fa fa-print"></i>
+                    --}}
+                    <button  onclick="cetakMember('{{ route('member.cetak')}}')" class="btn btn-sm btn-warning" ><i class="fa fa-id-card"></i>
                         Cetak Barcode
-                    </button> --}}
+                    </button>
                 </li>
               </ul>
             </div><!-- /.card-header -->
             <div class="card-body">
                 <div class="card">
                     <div class="card-body table-responsive">
-                      {{-- <form action="" method="post" class="form-member">
-                        @csrf --}}
+                      <form action="" method="post" class="form-member">
+                        @csrf
                         <table class="table table-hover ">
                           <thead>
                             <tr>
-                              {{-- <th>
+                              <th>
                                 <input type="checkbox" name="select_all" id="select_all">
-                              </th> --}}
+                              </th>
                               <th>No</th>
                               <th>Kode</th>
                               <th>Nama</th>
@@ -51,7 +52,7 @@
                            
                           </tbody>
                         </table>
-                      {{-- </form> --}}
+                      </form>
                     </div>
                     <!-- /.card-body -->
                 </div>
@@ -82,7 +83,7 @@
                 url: '{{ route('member.data')}}',
             },
             columns: [
-                // {data: 'select_all'},
+                {data: 'select_all'},
                 {data: 'DT_RowIndex', searchable:false, sortable:false},
                 {data: 'kode'},
                 {data: 'nama'},
@@ -108,6 +109,10 @@
                     return;
                 })
             }
+        });
+
+        $('[name=select_all]').on('click', function(){
+          $(':checkbox').prop('checked', this.checked);
         });
 
     });
@@ -182,7 +187,7 @@
       }
     }
 
-    function cetakBarcode(url) {
+    function cetakMember(url) {
       if($('input:checked').length < 1){
         alert('Pilih data yang ingin di cetak barcode');
         return;
